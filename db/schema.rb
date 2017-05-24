@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524213806) do
+ActiveRecord::Schema.define(version: 20170524233140) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,8 +22,11 @@ ActiveRecord::Schema.define(version: 20170524213806) do
     t.float    "cal"
     t.float    "caffeine"
     t.boolean  "disposable_cup"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "user_id"
+    t.integer  "purchase_cup_id"
+    t.integer  "purchase_pound_id"
   end
 
   create_table "purchase_cups", force: :cascade do |t|
@@ -34,6 +37,7 @@ ActiveRecord::Schema.define(version: 20170524213806) do
     t.boolean  "fair_trade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   create_table "purchase_pounds", force: :cascade do |t|
@@ -44,6 +48,7 @@ ActiveRecord::Schema.define(version: 20170524213806) do
     t.boolean  "fair_trade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
   create_table "users", force: :cascade do |t|
