@@ -1,0 +1,2 @@
+class PurchasePound < ApplicationRecord
+end

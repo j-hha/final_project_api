@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2017-05-24
+  price: 1.5
+  brand: MyString
+  rating: 1
+  fair_trade: false
+
+two:
+  date: 2017-05-24
+  price: 1.5
+  brand: MyString
+  rating: 1
+  fair_trade: false

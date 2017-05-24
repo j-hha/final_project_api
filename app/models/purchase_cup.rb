@@ -1,0 +1,2 @@
+class PurchaseCup < ApplicationRecord
+end
