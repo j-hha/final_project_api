@@ -9,9 +9,9 @@ class PurchaseCupsController < ApplicationController
   end
 
   # GET /purchase_cups/1
-  def show
-    render json: @purchase_cup
-  end
+  # def show
+  #   render json: @purchase_cup
+  # end
 
   # POST /purchase_cups
   def create

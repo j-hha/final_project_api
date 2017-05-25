@@ -9,9 +9,9 @@ class PurchasePoundsController < ApplicationController
   end
 
   # GET /purchase_pounds/1
-  def show
-    render json: @purchase_pound
-  end
+  # def show
+  #   render json: @purchase_pound
+  # end
 
   # POST /purchase_pounds
   def create

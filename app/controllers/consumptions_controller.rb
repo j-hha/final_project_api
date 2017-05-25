@@ -9,9 +9,9 @@ class ConsumptionsController < ApplicationController
   end
 
   # GET /consumptions/1
-  def show
-    render json: @consumption
-  end
+  # def show
+  #   render json: @consumption
+  # end
 
   # POST /consumptions
   def create
