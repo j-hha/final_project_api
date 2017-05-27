@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  resources :nutrients
+  resources :users do
+    collection do
+      post '/login', to: 'users#login'
+    end
+  end
+  # resources :nutrients
   resources :purchases
   resources :servings
-  resources :consumptions
-  resources :purchase_pounds
-  resources :purchase_cups
-  resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -1,5 +1,6 @@
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :update, :destroy]
+  before_action :authenticate_token
 
   # GET /purchases
   def index
