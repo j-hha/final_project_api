@@ -1,6 +1,7 @@
-class CreatePurchaseCups < ActiveRecord::Migration[5.0]
+class CreatePurchases < ActiveRecord::Migration[5.0]
   def change
-    create_table :purchase_cups do |t|
+    create_table :purchases do |t|
+      t.boolean :by_cup
       t.date :date
       t.float :price
       t.string :brand

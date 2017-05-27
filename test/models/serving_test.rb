@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ConsumptionTest < ActiveSupport::TestCase
+class ServingTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :nutrients
+  resources :purchases
+  resources :servings
   resources :consumptions
   resources :purchase_pounds
   resources :purchase_cups

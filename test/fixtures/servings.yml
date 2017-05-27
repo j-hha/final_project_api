@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2017-05-25
+  beverage_type: MyString
+  size: 1
+  cal: 1.5
+  caffeine: 1.5
+  sugar_content: 1.5
+  disposable_cup: false
+
+two:
+  date: 2017-05-25
+  beverage_type: MyString
+  size: 1
+  cal: 1.5
+  caffeine: 1.5
+  sugar_content: 1.5
+  disposable_cup: false

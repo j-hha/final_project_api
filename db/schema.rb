@@ -10,45 +10,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170524233140) do
+ActiveRecord::Schema.define(version: 20170527025009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "consumptions", force: :cascade do |t|
+  create_table "nutrients", force: :cascade do |t|
+    t.string   "beverage_type"
+    t.float    "cal"
+    t.float    "caffeine"
+    t.float    "sugar"
+    t.float    "fat"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "unit"
+  end
+
+  create_table "purchases", force: :cascade do |t|
+    t.boolean  "by_cup"
+    t.date     "date"
+    t.float    "price"
+    t.string   "brand"
+    t.integer  "rating"
+    t.boolean  "fair_trade", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
+  end
+
+  create_table "servings", force: :cascade do |t|
     t.date     "date"
     t.string   "beverage_type"
     t.integer  "size"
     t.float    "cal"
     t.float    "caffeine"
+    t.float    "sugar"
     t.boolean  "disposable_cup"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "user_id"
-    t.integer  "purchase_cup_id"
-    t.integer  "purchase_pound_id"
-  end
-
-  create_table "purchase_cups", force: :cascade do |t|
-    t.date     "date"
-    t.float    "price"
-    t.string   "brand"
-    t.integer  "rating"
-    t.boolean  "fair_trade"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "user_id"
-  end
-
-  create_table "purchase_pounds", force: :cascade do |t|
-    t.date     "date"
-    t.float    "price"
-    t.string   "brand"
-    t.integer  "rating"
-    t.boolean  "fair_trade"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "user_id"
+    t.integer  "purchase_id"
+    t.float    "fat"
   end
 
   create_table "users", force: :cascade do |t|
