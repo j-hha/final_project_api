@@ -90,9 +90,9 @@ class ServingsController < ApplicationController
     @serving = Serving.new(
       date:serving_params[:date],
       beverage_type:serving_params[:beverage_type],
-      size:serving_params[:size],
+      size: 1,
       disposable_cup:serving_params[:disposable_cup],
-      # purchase_id:serving_params[:purchase_id],
+      purchase_id:serving_params[:purchase_id],
       #user_id:consumer.id,
       user_id:2,
       caffeine:beverage['caffeine'],
@@ -129,6 +129,6 @@ class ServingsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def serving_params
-      params.require(:serving).permit(:date, :beverage_type, :size, :cal, :caffeine, :sugar_content, :disposable_cup)
+      params.require(:serving).permit(:date, :beverage_type, :size, :cal, :caffeine, :sugar_content, :disposable_cup, :purchase_id)
     end
 end

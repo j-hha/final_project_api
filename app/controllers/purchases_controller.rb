@@ -1,6 +1,6 @@
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :update, :destroy]
-  before_action :authenticate_token
+  # before_action :authenticate_token
 
   # GET /purchases
   def index
@@ -17,11 +17,13 @@ class PurchasesController < ApplicationController
   # POST /purchases
   def create
     @purchase = Purchase.new(purchase_params)
+    @purchase[:user_id] = 2
 
     if @purchase.save
-      render json: @purchase, status: :created, location: @purchase
+      render json: {status: 201, purchase: @purchase}
     else
-      render json: @purchase.errors, status: :unprocessable_entity
+      puts @purchase.error
+      render json: {status: 422, message: 'Unprocessable Entity'}
     end
   end
 
