@@ -1,27 +1,23 @@
 class ServingsController < ApplicationController
   before_action :set_serving, only: [:show, :update, :destroy]
-  # before_action :authenticate_token
+  before_action :authenticate_token
 
 
   # GET /servings
   def index
-    @servings = Serving.all
-
+    @servings = Serving.where(user_id: get_current_user.id.to_i);
     render json: @servings
   end
 
-  # GET /servings/1
-  def show
-    render json: @serving
-  end
+  # # GET /servings/1
+  # def show
+  #   render json: @serving
+  # end
 
   # POST /servings
   def create
     # save params for beverage_type to variable
     user_input = serving_params[:beverage_type]
-
-    # check who the currently logged in user is
-    consumer = get_current_user
 
     # method for calculating correct values based on user's choice of beverage
     def calculate_values(db_entry, multiplicator)
@@ -93,8 +89,8 @@ class ServingsController < ApplicationController
       size: 1,
       disposable_cup:serving_params[:disposable_cup],
       purchase_id:serving_params[:purchase_id],
-      #user_id:consumer.id,
-      user_id:2,
+      # check who the currently logged in user is
+      user_id:get_current_user.id,
       caffeine:beverage['caffeine'],
       cal:beverage['cal'],
       sugar:beverage['sugar'],

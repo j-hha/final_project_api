@@ -4,20 +4,27 @@ class PurchasesController < ApplicationController
 
   # GET /purchases
   def index
-    @purchases = Purchase.all
+    @purchases = Purchase.where(user_id: get_current_user.id.to_i)
 
     render json: @purchases
   end
 
-  # GET /purchases/1
-  def show
-    render json: @purchase
-  end
+  # # GET /purchases/1
+  # def show
+  #   render json: @purchase
+  # end
 
   # POST /purchases
   def create
-    @purchase = Purchase.new(purchase_params)
-    @purchase[:user_id] = 2
+    @purchase = Purchase.new(
+    date: purchase_params[:date],
+    brand: purchase_params[:brand],
+    by_cup: purchase_params[:by_cup],
+    fair_trade: purchase_params[:fair_trade],
+    price: purchase_params[:price],
+    rating: purchase_params[:rating],
+    # check who the currently logged in user is
+    user_id: get_current_user.id)
 
     if @purchase.save
       render json: {status: 201, purchase: @purchase}
