@@ -101,9 +101,9 @@ class ServingsController < ApplicationController
       fat:beverage['fat'])
 
     if @serving.save
-      render json: @serving, status: :created, location: @serving
+      render json: {status: 201, serving: @serving}
     else
-      render json: @serving.errors, status: :unprocessable_entity
+      render json: {status: 422, serving: @serving}
     end
   end
 
