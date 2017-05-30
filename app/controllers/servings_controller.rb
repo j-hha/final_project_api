@@ -117,16 +117,20 @@ class ServingsController < ApplicationController
     # puts @serving
     # puts @serving[:purchase_id]
     # puts Purchase.find(@serving.purchase_id)
+    puts "all servings associated with purchase by id #{@serving.purchase_id}"
     purchase_has_many = Serving.where(purchase_id: @serving.purchase_id)
-    puts '***'
+    puts "num of found servings #{purchase_has_many.length}"
     if purchase_has_many.length == 1
-      puts '$$$'
       purchase = Purchase.find(@serving.purchase_id)
-      purchase.destroy
+      puts "associated purchase: #{purchase}"
+      if purchase.by_cup == true
+        puts "purchased by cup #{purchase.by_cup}"
+        purchase.destroy
+        puts "deleting purchase"
+      end
     end
-    puts '###'
     @serving.destroy
-    puts '###'
+    puts "deleting serving"
     render json: {status: 204, serving: @serving, purchase: purchase}
   end
 

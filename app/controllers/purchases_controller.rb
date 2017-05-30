@@ -45,7 +45,14 @@ class PurchasesController < ApplicationController
 
   # DELETE /purchases/1
   def destroy
+    # find ALL servings associated with this purchase and delete them
+    all_servings = Serving.where(purchase_id: @purchase.id)
+    puts "all servings associated with this purchase: #{all_servings}"
+    all_servings.destroy_all
+    puts "deleted servings"
     @purchase.destroy
+    puts "deleted purchase"
+    render json: {status: 204, purchase: @purchase}
   end
 
   private
