@@ -1,12 +1,12 @@
 class ServingsController < ApplicationController
   before_action :set_serving, only: [:show, :update, :destroy]
   before_action :authenticate_token
-
+  before_action :authorize_serving_delete, only: [:destroy]
 
   # GET /servings
   def index
     @servings = Serving.where(user_id: get_current_user.id.to_i);
-    render json: @servings
+    render json: {status: 200, servings: @servings}
   end
 
   # # GET /servings/1
@@ -114,7 +114,20 @@ class ServingsController < ApplicationController
 
   # DELETE /servings/1
   def destroy
+    # puts @serving
+    # puts @serving[:purchase_id]
+    # puts Purchase.find(@serving.purchase_id)
+    purchase_has_many = Serving.where(purchase_id: @serving.purchase_id)
+    puts '***'
+    if purchase_has_many.length == 1
+      puts '$$$'
+      purchase = Purchase.find(@serving.purchase_id)
+      purchase.destroy
+    end
+    puts '###'
     @serving.destroy
+    puts '###'
+    render json: {status: 204, serving: @serving, purchase: purchase}
   end
 
   private

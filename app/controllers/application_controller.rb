@@ -34,4 +34,12 @@ class ApplicationController < ActionController::API
     puts "params: #{params[:id]}"
     render json: {status: 401, message: 'Unauthorized'} unless get_current_user.id === params[:id].to_i
   end
+
+  def authorize_serving_delete
+    puts 'AUTHORIZE DELETE'
+    puts "user id: #{get_current_user.id}"
+    puts "serving_params: #{params[:id]}"
+    serving = Serving.find(params[:id].to_i)
+    render json: {status: 401, message: 'Unauthorized'} unless get_current_user.id === serving[:user_id].to_i
+  end
 end

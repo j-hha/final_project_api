@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       render json: {status: 401, message: 'Unauthorized'}
     end
   end
-  #
+  
   # # GET /users
   # def index
   #   @users = User.all
