@@ -9,6 +9,20 @@ class PurchasesController < ApplicationController
     render json: @purchases
   end
 
+  # GET /purchases/finances
+  def finances
+    user = get_current_user.id
+    coffee = Purchase.joins(:servings).where(purchases: {by_cup: true, user_id: user}, servings: {user_id: user, beverage_type: 'black coffee'}).average(:price).to_f
+    cappuccino = Purchase.joins(:servings).where(purchases: {by_cup: true, user_id: user}, servings: {user_id: user, beverage_type: 'cappuccino'}).average(:price).to_f
+    coffeeshop_visits_total = Purchase.count({by_cup: true, user_id: user})
+
+    if (coffee && cappuccino)
+      render json: { status: 200, coffee_average: coffee, cappuccino_average: cappuccino }
+    else
+      render json: average_price.errors, status: :unprocessable_entity
+    end
+  end
+
   # # GET /purchases/1
   # def show
   #   render json: @purchase
