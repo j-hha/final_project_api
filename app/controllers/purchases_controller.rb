@@ -1,3 +1,5 @@
+require 'date'
+
 class PurchasesController < ApplicationController
   before_action :set_purchase, only: [:show, :update, :destroy]
   # before_action :authenticate_token
@@ -14,10 +16,40 @@ class PurchasesController < ApplicationController
     user = get_current_user.id
     coffee = Purchase.joins(:servings).where(purchases: {by_cup: true, user_id: user}, servings: {user_id: user, beverage_type: 'black coffee'}).average(:price).to_f
     cappuccino = Purchase.joins(:servings).where(purchases: {by_cup: true, user_id: user}, servings: {user_id: user, beverage_type: 'cappuccino'}).average(:price).to_f
-    coffeeshop_visits_total = Purchase.count({by_cup: true, user_id: user})
 
-    if (coffee && cappuccino)
-      render json: { status: 200, coffee_average: coffee, cappuccino_average: cappuccino }
+    purchases_stats = {
+      'total' => {
+        'by_cup' => { count: 0, average_price: 0 },
+        'by_bag' => { count: 0, average_price: 0 }
+      },
+      'past_month' => {
+          'by_cup' => { count: 0, average_price: 0 },
+          'by_bag' => { count: 0, average_price: 0 }
+      }
+    }
+
+    # total num of purchases by cup
+    purchases_stats['total']['by_cup']['count'] = Purchase.where({by_cup: true, user_id: user}).count
+    # average price paid
+    purchases_stats['total']['by_cup']['average_price'] = Purchase.where({by_cup: true, user_id: user}).average(:price).to_f
+
+    # num of purchases by cup in the past month
+    purchases_stats['past_month']['by_cup']['count'] = Purchase.where({by_cup: true, user_id: user, date: Date.today.prev_month..Date.today}).count
+    #average price paid
+    purchases_stats['past_month']['by_cup']['average_price'] = Purchase.where({by_cup: true, user_id: user, date: Date.today.prev_month..Date.today}).average(:price).to_f
+
+    #total num of purchases by bag
+    purchases_stats['total']['by_bag']['count'] = Purchase.where({by_cup: false, user_id: user}).count
+    #average price paid
+    purchases_stats['total']['by_bag']['average_price'] = Purchase.where({by_cup: false, user_id: user}).average(:price).to_f
+
+    # num of purchases by bag in the past month
+    purchases_stats['past_month']['by_bag']['count'] = Purchase.where({by_cup: false, user_id: user, date: Date.today.prev_month..Date.today}).count
+    #average price paid
+    purchases_stats['past_month']['by_bag']['average_price'] = Purchase.where({by_cup: false, user_id: user, date: Date.today.prev_month..Date.today}).average(:price).to_f
+
+    if (coffee && cappuccino && purchases_stats)
+      render json: { status: 200, coffee_average: coffee, cappuccino_average: cappuccino, stats: purchases_stats }
     else
       render json: average_price.errors, status: :unprocessable_entity
     end
@@ -48,14 +80,14 @@ class PurchasesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /purchases/1
-  def update
-    if @purchase.update(purchase_params)
-      render json: @purchase
-    else
-      render json: @purchase.errors, status: :unprocessable_entity
-    end
-  end
+  # # PATCH/PUT /purchases/1
+  # def update
+  #   if @purchase.update(purchase_params)
+  #     render json: @purchase
+  #   else
+  #     render json: @purchase.errors, status: :unprocessable_entity
+  #   end
+  # end
 
   # DELETE /purchases/1
   def destroy
